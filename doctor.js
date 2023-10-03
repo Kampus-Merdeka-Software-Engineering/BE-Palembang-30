@@ -1,28 +1,10 @@
-import express from 'express'
+import { Router } from 'express';
+import { get, post } from '../controllers/doctor.js';
 
-//Daftar Semua Dokter
-export const get = ("/:No", (request, response) => {
+const doctorRouter = Router();
 
-    const { NIP } = request.params;
-    const { Name } = request.query;
-    const { Agency, Spesialisasi} = request.body;
+doctorRouter.get("/:No", get);
 
-        
-    response.json({
-        NIP,
-        Name,
-        Agency,
-        Spesialisasi,
-    });
-});
+doctorRouter.post("/", post);
 
-//Pendaftaran Dokter
-export const post = ("/", (request, response) => {
-
-    const newDoctor = request.body;
-    response.json({
-        message: "Data has been registered", data: newDoctor
-    });
-});
-
-
+export default  doctorRouter;

@@ -1,28 +1,11 @@
-import express from 'express'
+import { Router } from 'express';
+import { get, post } from '../controllers/patients.js';
 
-//Daftar Semua Pasien
-export const get = ("/:No", (request, response) => {
+const patientsRouter = Router();
 
-    const { No } = request.params;
-    const { Name } = request.query;
-    const { Age, Gender, Diagnosis} = request.body;
-        
-    response.json({
-        No,
-        Name,
-        Age,
-        Gender,
-        Diagnosis,
-    });
-});
+patientsRouter.get("/:No", get);
 
-//Pendaftaran Pasien
-export const post = ("/", (request, response) => {
-
-    const newPatients = request.body;
-    response.json({
-        message: "Data has been registered", data: newPatients
-    });
-});
+patientsRouter.post("/", post);
 
 
+export default  patientsRouter;

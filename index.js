@@ -1,42 +1,48 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import doctorRouter from './route/doctor.js';
-import patientsRouter from './route/patients.js';
+import usersRouter from './Routes/users.js';
+import { startSequelize } from './utils/startSequelize.js';
+import sequelize from './config/sequelize.js';
+import dotenv from 'dotenv';
+import feedbacksRouter from './Routes/feedbacks.js';
+import doctorsRouter from './Routes/doctors.js';
+import diabetesChecksRouter from './Routes/diabetes_checks.js';
+import cors from 'cors';
 
-const server = express();
-const port = 2222;
+dotenv.config();
 
+const server=express();
+const port =process.env.PORT;
 
-/*const sequelize = new Sequelize('db_baru', 'username', 'password',{
-    host: 'localhost',
-    dialect: 'mysql'
-});
-   
-sequelize.authenticate().then(() => {
-    console.log("Connection to database succesful")
-});*/
+startSequelize(sequelize);
+// sequelize.models.Users.create({
+//     username: "perk",
+//     email: "per123@mail.id",
+//     password: "123",
+// });
 
-server.use(bodyParser.urlencoded({ extended: false}));
+// sequelize.authenticate().then(()=>{
+//     console.log("connection to database successfull")
+// })
+
+server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.raw());
 server.use(bodyParser.json());
+server.use(cors());
 
-server.use("/doctor", doctorRouter);
-server.use("/patients", patientsRouter);
+server.use("/users",usersRouter);
+server.use("/feedbacks",feedbacksRouter);
+server.use("/diabetesChecks",diabetesChecksRouter);
+server.use("/doctors",doctorsRouter);
 
-//Middleware
-server.use((error, request, response, next) => {
-    response.status(500);
-    response.json({
-        message: "Internal server error!",
+server.use((error,req,res,next)=>{
+    res.status(500).json({
+        message:"internal server error"
     });
-    
-    console.log("Log error from middleware:");
     console.error(error);
     next();
 });
 
-
-server.listen(port, () => {
-    console.log(`Server running on port ${port}!`);
+server.listen(port, ()=>{
+    console.log(`Server is running at port ${port}.`)
 });
-

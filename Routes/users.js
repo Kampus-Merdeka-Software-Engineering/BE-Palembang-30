@@ -1,6 +1,5 @@
 import {Router} from 'express';
-import { getAllUsers, getUserByUsername, postUser, putUserByUsername } from '../Controllers/users.js';
-import { removeUserByUsername } from '../services/users.js';
+import { deleteUserByUsername, getAllUsers, getUserByUsername, postUser, putUserByUsername } from '../Controllers/users.js';
 
 const userRouter = Router();
 
@@ -11,6 +10,6 @@ userRouter.post("/",postUser);
 
 userRouter.put("/:username",putUserByUsername);
 
-userRouter.delete("/:username",removeUserByUsername);
+userRouter.delete("/:username",deleteUserByUsername);
 
 export default userRouter;

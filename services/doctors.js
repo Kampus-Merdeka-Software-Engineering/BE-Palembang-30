@@ -1,7 +1,7 @@
 import Doctors from "../models/doctors.js"
 
 export const createDoctor= async(name,email,jabatan,phone_number)=>{
-    return await Doctors.create({
+    await Doctors.create({
         name,
         email,
         jabatan,

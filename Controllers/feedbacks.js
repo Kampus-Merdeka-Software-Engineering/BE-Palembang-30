@@ -1,4 +1,4 @@
-import { findAllFeedbacks, findFeedbacksById, removeFeedbacksById, updateFeedbacksById } from "../services/feedbacks.js";
+import { findAllFeedbacks, findFeedbacksById, removeFeedbacksById, updateFeedbacksById, createFeedbacks } from "../services/feedbacks.js";
 import { findUserByUsername } from "../services/users.js";
 
 export const getAllFeedbacks = async()=>{

@@ -1,7 +1,7 @@
 import DiabetesChecks from "../models/diabetes_checks.js"
 
 export const createDiabetesChecks= async(name,email,age,gender,result,UserUsername)=>{
-    return await DiabetesChecks.create({
+    await DiabetesChecks.create({
         name,
         email,
         age,

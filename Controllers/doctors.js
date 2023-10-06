@@ -4,7 +4,7 @@ import { findAllDoctors, findDoctorById, createDoctor, removeDoctorById, updateD
 export const getAllDoctors= async (req,res)=>{
     const DoctorList = await findAllDoctors();
     res.json({
-        data: DoctorList,
+        DoctorList,
         message: httpStatusMessages[res.statusCode]
     });
 };

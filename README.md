@@ -2,6 +2,6 @@
 
 [![Spreadsheet API BackEnd]](https://docs.google.com/spreadsheets/d/19tr8bLxGFblhAMAkLogHAp7hBPkiJwyDqQB-ZvflJp0/edit?usp=sharing)
 
-[![BackEnd Vercel Project]](https://vercel.com/ppermadiks-projects/be-palembang-30/7U8MCWT1thzEBs14vXRvwc7wApjQ)
+[![BackEnd Vercel Project]](https://vercel.com/ppermadiks-projects/be-palembang-30/7fy5SpwwNDPKGS7YJe9snjmvcrYC)
 
-[![BackEnd Main URL]](https://be-palembang-30-i6xeeffxs-ppermadiks-projects.vercel.app/)
+[![BackEnd Main URL]](https://be-palembang-30-cryie20o4-ppermadiks-projects.vercel.app/)

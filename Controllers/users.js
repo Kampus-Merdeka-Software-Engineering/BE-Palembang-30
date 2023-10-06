@@ -10,24 +10,26 @@ export const getAllUsers= async (req,res)=>{
 export const getUserByUsername= async (req,res)=>{
     // const usersList= await sequelize.models.Users.findAll();
     const user= await findUserByUsername(req.params.username);
-    res.json({
-        data: user,
-        message: httpStatusMessages[res.statusCode]
-    });
+    res.json(user);
+    // res.json({
+    //     data: user,
+    //     message: httpStatusMessages[res.statusCode]
+    // });
 };
 
 export const postUser= async(req,res)=>{
     const {username,email,password}=req.body;
-    const user = await createUser(username,email,password)
+    const user = await createUser(username,email,password);
+    res.json(user);
     // sequelize.models.Users.create({
     //     username,
     //     email,
     //     password
     // });
-    res.json({
-        data:user,
-        message: httpStatusMessages[res.statusCode]
-    });
+    // res.json({
+    //     data:user,
+    //     message: httpStatusMessages[res.statusCode]
+    // });
     // const {id}=req.params;
     // const {name}=req.query;
     // const {short_name,part,full_name,partner}=req.body;
@@ -46,10 +48,11 @@ export const putUserByUsername= async(req,res)=>{
     const {email,password}=req.body;
     await updateUserByUsername(req.params.username,email,password)
     const user= await findUserByUsername(req.params.username);
-    res.json({
-        data: user,
-        message: httpStatusMessages[res.statusCode]
-    });
+    res.json(user);
+    // res.json({
+    //     data: user,
+    //     message: httpStatusMessages[res.statusCode]
+    // });
 };
 
 export const deleteUserByUsername= async(req,res,next)=>{

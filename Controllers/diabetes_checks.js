@@ -4,10 +4,11 @@ import { findUserByUsername } from "../services/users.js";
 
 export const getAllDiabetesChecks= async (req,res)=>{
     const diabetesCheckList = await findAllDiabetesChecks();
-    res.json({
-        data: diabetesCheckList,
-        message: httpStatusMessages[res.statusCode]
-    });
+    res.json(diabetesCheckList);
+    // res.json({
+    //     data: diabetesCheckList,
+    //     message: httpStatusMessages[res.statusCode]
+    // });
 };
 
 export const getDiabetesChecksById= async(req,res)=>{
@@ -20,32 +21,35 @@ export const getDiabetesChecksById= async(req,res)=>{
         });
         return;
     };
-    res.json({
-        data:{
-            ...diabetesChecks.dataValues,
-            users
-        },
-        message:httpStatusMessages[res.statusCode]
-    });
+    res.json(...diabetesChecks.dataValues,users);
+    // res.json({
+    //     data:{
+    //         ...diabetesChecks.dataValues,
+    //         users
+    //     },
+    //     message:httpStatusMessages[res.statusCode]
+    // });
 };
 
 export const postDiabetesChecks= async(req,res)=>{
     const {name,email,age,gender,result,UserUsername}=req.body;
     const diabetesChecks = await createDiabetesChecks(name,email,age,gender,result,UserUsername)
-    res.json({
-        data: diabetesChecks,
-        message: httpStatusMessages[res.statusCode]
-    });
+    res.json(diabetesChecks);
+    // res.json({
+    //     data: diabetesChecks,
+    //     message: httpStatusMessages[res.statusCode]
+    // });
 };
 
 export const putDiabetesChecksById = async(req,res)=>{
     const {name,email,age,gender,result}=req.body;
     await updateDiabetesChecksById(req.params.id,name,email,age,gender,result)
-    const DiabetesCheck= await getDiabetesChecksById(req.params.id);
-    res.json({
-        data: DiabetesCheck,
-        message: httpStatusMessages[res.statusCode]
-    });
+    const diabetesChecks= await getDiabetesChecksById(req.params.id);
+    res.json(diabetesChecks);
+    // res.json({
+    //     data: DiabetesCheck,
+    //     message: httpStatusMessages[res.statusCode]
+    // });
 };
 
 export const deleteDiabetesChecksById= async(req,res,next)=>{

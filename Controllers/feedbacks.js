@@ -4,10 +4,11 @@ import { findUserByUsername } from "../services/users.js";
 
 export const getAllFeedbacks = async(req,res)=>{
     const feedbackList = await findAllFeedbacks();
-    res.json({
-        data:feedbackList,
-        message: httpStatusMessages[res.statusCode]
-    });
+    res.json(feedbackList);
+    // res.json({
+    //     data:feedbackList,
+    //     message: httpStatusMessages[res.statusCode]
+    // });
 };
 
 export const getFeedbacksById= async(req,res)=>{
@@ -20,13 +21,14 @@ export const getFeedbacksById= async(req,res)=>{
         });
         return;
     };
-    res.json({
-        data:{
-            ...feedbacks.dataValues,
-            users
-        },
-        message: httpStatusMessages[res.statusCode]
-    });
+    res.json(...feedbacks.dataValues,users);
+    // res.json({
+    //     data:{
+    //         ...feedbacks.dataValues,
+    //         users
+    //     },
+    //     message: httpStatusMessages[res.statusCode]
+    // });
 };
 
 // export const getWithUsers= async(req,res)=>{
@@ -44,20 +46,22 @@ export const getFeedbacksById= async(req,res)=>{
 export const postFeedbacks = async(req,res)=>{
     const{name,email,subject,feedback,UserUsername}=req.body;
     const feedbacks = await createFeedbacks(name,email,subject,feedback,UserUsername);
-    res.json({
-        data:feedbacks,
-        message: httpStatusMessages[res.statusCode]
-    });
+    res.json(feedbacks);
+    // res.json({
+    //     data:feedbacks,
+    //     message: httpStatusMessages[res.statusCode]
+    // });
 };
 
 export const putFeedbacksById = async(req,res)=>{
     const{name,email,subject,feedback}=req.body;
     await updateFeedbacksById(req.params.id,name,email,subject,feedback);
     const feedbacks = await getFeedbacksById(req.params.id)
-    res.json({
-        data:feedbacks,
-        message: httpStatusMessages[res.statusCode]
-    });
+    res.json(feedbacks);
+    // res.json({
+    //     data:feedbacks,
+    //     message: httpStatusMessages[res.statusCode]
+    // });
 };
 
 export const deleteFeedbacksById = async(req,res)=>{

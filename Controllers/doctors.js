@@ -18,13 +18,14 @@ export const getDoctorById= async (req,res)=>{
 
 export const postDoctor= async(req,res)=>{
     const {name,email,jabatan,phone_number}=req.body;
-    await createDoctor(name,email,jabatan,phone_number)
+    const doctor = await createDoctor(name,email,jabatan,phone_number)
     // sequelize.models.Users.create({
     //     username,
     //     email,
     //     password
     // });
     res.json({
+        data:doctor,
         message: httpStatusMessages[res.statusCode]
     });
     // const {id}=req.params;

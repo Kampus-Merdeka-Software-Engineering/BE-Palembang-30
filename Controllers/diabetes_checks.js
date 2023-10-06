@@ -30,8 +30,9 @@ export const getDiabetesChecksById= async(req,res)=>{
 
 export const postDiabetesChecks= async(req,res)=>{
     const {name,email,age,gender,result,UserUsername}=req.body;
-    await createDiabetesChecks(name,email,age,gender,result,UserUsername)
+    const diabetesChecks = await createDiabetesChecks(name,email,age,gender,result,UserUsername)
     res.json({
+        data: diabetesChecks,
         message: httpStatusMessages[res.statusCode]
     });
 };

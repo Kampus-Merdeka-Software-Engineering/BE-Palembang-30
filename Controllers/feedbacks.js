@@ -2,7 +2,7 @@ import { httpStatusMessages } from "../constants/httpStatusMessages.js";
 import { findAllFeedbacks, findFeedbacksById, removeFeedbacksById, updateFeedbacksById, createFeedbacks } from "../services/feedbacks.js";
 import { findUserByUsername } from "../services/users.js";
 
-export const getAllFeedbacks = async(res)=>{
+export const getAllFeedbacks = async(req,res)=>{
     const feedbackList = await findAllFeedbacks();
     res.json({
         data:feedbackList,

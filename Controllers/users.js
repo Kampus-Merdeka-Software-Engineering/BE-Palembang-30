@@ -4,10 +4,7 @@ import { createUser, findAllUsers, findUserByUsername, removeUserByUsername, upd
 export const getAllUsers= async (req,res)=>{
     // const usersList= await sequelize.models.Users.findAll();
     const userList= await findAllUsers();
-    res.json({
-        data: userList,
-        message: httpStatusMessages[res.statusCode]
-    });
+    res.json(userList);
 };
 
 export const getUserByUsername= async (req,res)=>{

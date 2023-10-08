@@ -1,12 +1,16 @@
 import {Router} from 'express';
-import { deleteUserByUsername, getAllUsers, getUserByUsername, postUser, putUserByUsername } from '../Controllers/users.js';
+import { authUser, deleteUserByUsername, getAllUsers, getUserByUsername, loginUser, logoutUser, postUser, putUserByUsername, registerUser } from '../Controllers/users.js';
 
 const userRouter = Router();
 
 userRouter.get("/:username",getUserByUsername);
 userRouter.get("/",getAllUsers);
+userRouter.get('/logout',logoutUser);
+userRouter.get('/check-auth',authUser);
 
 userRouter.post("/",postUser);
+userRouter.post('/register',registerUser);
+userRouter.post('/login',loginUser);
 
 userRouter.put("/:username",putUserByUsername);
 

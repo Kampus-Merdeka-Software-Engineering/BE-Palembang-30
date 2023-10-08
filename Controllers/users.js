@@ -65,3 +65,38 @@ export const deleteUserByUsername= async(req,res,next)=>{
         next(e);
     }
 };
+
+export const registerUser = async (req,res)=>{
+  const { username, email,password } = req.body;
+  const existingUser = await findUserByUsername(username);
+
+  if (existingUser) {
+    return res.status(400).send('User already exists');
+  }
+
+  await createUser(username,email,password)
+  res.send('Registration successful');
+};
+
+export const loginUser = async (req,res)=>{
+    const {username,password}=req.body;
+    const user=await findUserByUsername(username);
+    if(!user || user.password!=password){
+        return res.status(401).send('Invalid username or password');
+    }
+    req.session.user=user;
+    res.send('Login successful')
+};
+
+export const logoutUser = async (req,res)=>{
+    req.session.destroy();
+    res.send('Logged out')
+};
+
+export const authUser = async (req,res)=>{
+    if (req.session.user) {
+        res.send(`Authenticated as ${req.session.user.username}`);
+    } else {
+        res.status(401).send('Not authenticated');
+    }
+};

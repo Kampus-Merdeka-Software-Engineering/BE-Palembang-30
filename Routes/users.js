@@ -9,8 +9,8 @@ userRouter.get('/logout',logoutUser);
 userRouter.get('/check-auth',authUser);
 
 userRouter.post("/",postUser);
-userRouter.post('/register',registerUser);
-userRouter.post('/login',loginUser);
+userRouter.post('/register/:username',registerUser);
+userRouter.post('/login/:username',loginUser);
 
 userRouter.put("/:username",putUserByUsername);
 

@@ -68,7 +68,7 @@ export const deleteUserByUsername= async(req,res,next)=>{
 
 export const registerUser = async (req,res)=>{
   const { username, email,password } = req.body;
-  const existingUser = await findUserByUsername(username);
+  const existingUser = await findUserByUsername(req.params.username);
 
   if (existingUser) {
     return res.status(400).send('User already exists');
@@ -80,8 +80,8 @@ export const registerUser = async (req,res)=>{
 };
 
 export const loginUser = async (req,res)=>{
-    const {username,password}=req.body;
-    const user=await findUserByUsername(username);
+    const {password}=req.body;
+    const user=await findUserByUsername(req.params.username);
     if(!user || user.password!=password){
         return res.status(401).send('Invalid username or password');
     }

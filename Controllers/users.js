@@ -96,12 +96,17 @@ export const logoutUser = async (req,res)=>{
 };
 
 export const authenticate = (req, res, next) => {
-    if (req.session && req.session.user) {
-      return next();
-    } else {
-      return res.status(401).send('Not authenticated');
+    try {
+      if (req.session && req.session.user) {
+        return next();
+      } else {
+        return res.status(401).send('Not authenticated');
+      }
+    } catch (error) {
+      console.error('Authentication error:', error);
+      return res.status(500).send('Internal server error');
     }
-};
+  };
 
 export const authUser = async (req, res) => {
     res.send(`Authenticated as ${req.session.user.username}`);

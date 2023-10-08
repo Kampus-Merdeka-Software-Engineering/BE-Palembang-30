@@ -74,7 +74,8 @@ export const registerUser = async (req,res)=>{
     return res.status(400).send('User already exists');
   }
 
-  await createUser(username,email,password)
+  const user = await createUser(username,email,password);
+  res.json(user);
   res.send('Registration successful');
 };
 

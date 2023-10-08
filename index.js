@@ -1,7 +1,5 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import session from 'express-session';
-import cookieParser from 'cookie-parser';
 import usersRouter from './Routes/users.js';
 import { startSequelize } from './utils/startSequelize.js';
 import sequelize from './config/sequelize.js';
@@ -10,6 +8,7 @@ import feedbacksRouter from './Routes/feedbacks.js';
 import doctorsRouter from './Routes/doctors.js';
 import diabetesChecksRouter from './Routes/diabetes_checks.js';
 import cors from 'cors';
+import sessionMiddleware from './config/session.js';
 
 dotenv.config();
 
@@ -27,19 +26,7 @@ startSequelize(sequelize);
 //     console.log("connection to database successfull")
 // })
 
-server.use(cookieParser());
-server.use(
-    session({
-      secret: 'your-secret-key',
-      resave: false,
-      saveUninitialized: true,
-      cookie: {
-        secure: true, // Use HTTPS
-        httpOnly: true, // Prevent client-side JavaScript access
-        maxAge: 1000 * 60 * 60 * 24, // Session duration (1 day)
-      },
-    })
-);
+server.use(sessionMiddleware);
 
 server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.raw());

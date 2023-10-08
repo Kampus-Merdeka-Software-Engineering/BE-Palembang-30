@@ -44,8 +44,8 @@ export const getFeedbacksById= async(req,res)=>{
 // };
 
 export const postFeedbacks = async(req,res)=>{
-    const{name,email,subject,feedback,UserUsername}=req.body;
-    const feedbacks = await createFeedbacks(name,email,subject,feedback,UserUsername);
+    const{name,email,subject,feedback}=req.body;
+    const feedbacks = await createFeedbacks(name,email,subject,feedback);
     res.json(feedbacks);
     // res.json({
     //     data:feedbacks,

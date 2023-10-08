@@ -87,7 +87,7 @@ export const loginUser = async (req,res)=>{
     }
     req.session.user=user;
     console.log("User is logged in:", req.session.user);
-    res.send('Login successful')
+    res.send('Login successful',req.session.user)
 };
 
 export const logoutUser = async (req,res)=>{
@@ -95,10 +95,14 @@ export const logoutUser = async (req,res)=>{
     res.send('Logged out')
 };
 
-export const authUser = async (req,res)=>{
-    if (req.session.user) {
-        res.send(`Authenticated as ${req.session.user.username}`);
+export const authenticate = (req, res, next) => {
+    if (req.session && req.session.user) {
+      return next();
     } else {
-        res.status(401).send('Not authenticated');
+      return res.status(401).send('Not authenticated');
     }
+};
+
+export const authUser = async (req, res) => {
+    res.send(`Authenticated as ${req.session.user.username}`);
 };

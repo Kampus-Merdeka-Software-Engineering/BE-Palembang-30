@@ -26,12 +26,12 @@ startSequelize(sequelize);
 //     console.log("connection to database successfull")
 // })
 
-server.use(sessionMiddleware);
-
 server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.raw());
 server.use(bodyParser.json());
-server.use(cors());
+server.use(cors({credentials:true}));
+
+server.use(sessionMiddleware);
 
 server.use("/users",usersRouter);
 server.use("/feedbacks",feedbacksRouter);

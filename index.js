@@ -29,7 +29,10 @@ startSequelize(sequelize);
 server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.raw());
 server.use(bodyParser.json());
-server.use(cors({origin: 'http://127.0.0.1:5501',credentials:true}));
+server.use(cors({
+  origin: 'http://127.0.0.1:5501',
+  credentials: true, // Allow credentials (cookies, headers)
+}));
 
 server.use(sessionMiddleware);
 

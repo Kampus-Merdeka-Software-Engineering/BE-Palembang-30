@@ -8,7 +8,7 @@ const sessionMiddleware = session({
     secure: true, // Use HTTPS
     httpOnly: true, // Prevent client-side JavaScript access
     maxAge: 1000 * 60 * 60 * 24, // Session duration (1 day)
-    domain: 'https://be-palembang-30.vercel.app'
+    domain: '/'
   },
 });
 

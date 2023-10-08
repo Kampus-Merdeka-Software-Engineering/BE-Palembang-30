@@ -87,7 +87,7 @@ export const loginUser = async (req,res)=>{
     }
     req.session.user=user;
     console.log("User is logged in:", req.session.user);
-    res.send('Login successful',req.session.user)
+    res.send('Login successful')
 };
 
 export const logoutUser = async (req,res)=>{

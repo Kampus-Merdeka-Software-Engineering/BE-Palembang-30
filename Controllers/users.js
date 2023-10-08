@@ -97,7 +97,7 @@ export const logoutUser = async (req,res)=>{
 
 export const authenticate = (req, res, next) => {
     try {
-      if (req.session && req.session.user) {
+      if (req.session && req.session.user.username) {
         return next();
       } else {
         return res.status(401).send('Not authenticated');

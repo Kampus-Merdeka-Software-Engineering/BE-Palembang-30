@@ -81,10 +81,12 @@ export const registerUser = async (req,res)=>{
 export const loginUser = async (req,res)=>{
     const {username, password}=req.body;
     const user=await findUserByUsername(username);
+    console.log("User found in database:", user);
     if(!user || user.password!=password){
         return res.status(401).send('Invalid username or password');
     }
     req.session.user=user;
+    console.log("User is logged in:", req.session.user);
     res.send('Login successful')
 };
 

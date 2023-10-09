@@ -132,19 +132,31 @@ export const logoutUser = (req,res)=>{
 //   })
 // };
 
-export const authUser = (req, res,next) => {
-  let token = req.session.token;
-  if (!token) {
-    return res.status(403).json({ message: 'No token provided!' });
-  }
-  jwt.verify(token,secretKey,(err,decoded) =>{
-    if(err){
-      return res.status(401).json({
-        message: "Unauthorized!",
-      });
+export const authUser = (req, res, next) => {
+  try {
+    // Retrieve the JWT token from the cookies
+    const token = req.session.token;
+
+    // Check if the token is missing
+    if (!token) {
+      return res.status(403).json({ message: 'No token provided!' });
     }
-    res.status(200).json({ message: 'Authenticated', user: decoded});
-    next();
-  })
-  
+
+    // Verify the JWT token
+    jwt.verify(token, secretKey, (err, decoded) => {
+      if (err) {
+        console.error('JWT verification error:', err);
+        return res.status(401).json({
+          message: 'Unauthorized!',
+        });
+      }
+
+      // JWT token is valid; you can access the decoded data
+      res.status(200).json({ message: 'Authenticated', user: decoded });
+      next();
+    });
+  } catch (error) {
+    console.error('Authentication error:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 };

@@ -1,6 +1,5 @@
 import {Router} from 'express';
-import { authUser, authenticate, deleteUserByUsername, getAllUsers, getUserByUsername, loginUser, logoutUser, postUser, putUserByUsername, registerUser } from '../Controllers/users.js';
-import sessionMiddleware from '../config/session.js';
+import { authUser, deleteUserByUsername, getAllUsers, getUserByUsername, loginUser, logoutUser, postUser, putUserByUsername, registerUser } from '../Controllers/users.js';
 
 const userRouter = Router();
 

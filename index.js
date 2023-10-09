@@ -35,7 +35,6 @@ const corsOptions = {
 };
 
 server.use(cors(corsOptions));
-server.use(cors());
 // server.use(
 //   cors({
 //     origin: 'http://127.0.0.1:5501', // Replace with your frontend domain

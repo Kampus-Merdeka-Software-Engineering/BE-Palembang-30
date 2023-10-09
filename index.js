@@ -29,7 +29,7 @@ server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.raw());
 server.use(bodyParser.json());
 
-server.options("*", cors());
+server.use(cors());
 // server.use(
 //   cors({
 //     origin: 'http://127.0.0.1:5501', // Replace with your frontend domain

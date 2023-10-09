@@ -116,7 +116,23 @@ export const logoutUser = (req,res)=>{
   }
 };
 
-export const authenticate = (req, res, next) => {
+// export const authenticate = (req, res, next) => {
+//   let token = req.session.token;
+//   if (!token) {
+//     return res.status(403).json({ message: 'No token provided!' });
+//   }
+//   jwt.verify(token,secretKey,(err,decoded) =>{
+//     if(err){
+//       return res.status(401).json({
+//         message: "Unauthorized!",
+//       });
+//     }
+//     var usern=decoded.username
+//     next()
+//   })
+// };
+
+export const authUser = (req, res,next) => {
   let token = req.session.token;
   if (!token) {
     return res.status(403).json({ message: 'No token provided!' });
@@ -127,11 +143,8 @@ export const authenticate = (req, res, next) => {
         message: "Unauthorized!",
       });
     }
-    req.username=decoded.username
-    next()
+    res.status(200).json({ message: 'Authenticated', user: decoded});
+    next();
   })
-};
-
-export const authUser = (req, res) => {
-  res.status(200).json({ message: 'Authenticated'});
+  
 };

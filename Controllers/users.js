@@ -141,7 +141,8 @@ export const authUser = (req, res, next) => {
     if (!token) {
       return res.status(403).json({ message: 'No token provided!' });
     }
-
+    res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:5501'); // Specify the frontend origin
+    res.header('Access-Control-Allow-Credentials', true); // Allow credentials
     // Verify the JWT token
     jwt.verify(token, secretKey, (err, decoded) => {
       if (err) {

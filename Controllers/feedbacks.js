@@ -56,7 +56,7 @@ export const postFeedbacks = async(req,res)=>{
 export const putFeedbacksById = async(req,res)=>{
     const{name,email,subject,feedback}=req.body;
     await updateFeedbacksById(req.params.id,name,email,subject,feedback);
-    const feedbacks = await getFeedbacksById(req.params.id)
+    const feedbacks = await findFeedbacksById(req.params.id)
     res.json(feedbacks);
     // res.json({
     //     data:feedbacks,

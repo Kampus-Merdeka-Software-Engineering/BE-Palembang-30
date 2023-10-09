@@ -49,7 +49,7 @@ export const postDoctor= async(req,res)=>{
 export const putDoctorById = async(req,res)=>{
     const {name,email,jabatan,phone_number}=req.body;
     await updateDoctorById(req.params.id,name,email,jabatan,phone_number)
-    const Doctor= await getDoctorById(req.params.id);
+    const Doctor= await findDoctorById(req.params.id);
     res.json(Doctor);
     // res.json({
     //     data: Doctor,

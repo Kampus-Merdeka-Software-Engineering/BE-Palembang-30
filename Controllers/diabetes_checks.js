@@ -44,7 +44,7 @@ export const postDiabetesChecks= async(req,res)=>{
 export const putDiabetesChecksById = async(req,res)=>{
     const {name,email,age,gender,result}=req.body;
     await updateDiabetesChecksById(req.params.id,name,email,age,gender,result)
-    const diabetesChecks= await getDiabetesChecksById(req.params.id);
+    const diabetesChecks= await findDiabetesChecksById(req.params.id);
     res.json(diabetesChecks);
     // res.json({
     //     data: DiabetesCheck,

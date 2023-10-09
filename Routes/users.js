@@ -1,11 +1,11 @@
 import {Router} from 'express';
-import { authUser, deleteUserByUsername, getAllUsers, getUserByUsername, loginUser, logoutUser, postUser, putUserByUsername, registerUser } from '../Controllers/users.js';
+import { authUser, authenticate, deleteUserByUsername, getAllUsers, getUserByUsername, loginUser, logoutUser, postUser, putUserByUsername, registerUser } from '../Controllers/users.js';
 
 const userRouter = Router();
 
 userRouter.get("/:username",getUserByUsername);
 userRouter.get("/",getAllUsers);
-userRouter.get('/profile',authUser);
+userRouter.get('/profile',authenticate, authUser);
 
 userRouter.post("/",postUser);
 userRouter.post('/register',registerUser);

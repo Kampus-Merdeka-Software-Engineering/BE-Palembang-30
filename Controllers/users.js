@@ -86,44 +86,52 @@ export const registerUser = async (req,res)=>{
 };
 
 export const loginUser = async (req,res)=>{
+  try{
     const {username, password}=req.body;
     const user=await findUserByUsername(username);
     if(!user || user.password!==password){
         return res.status(401).json({message: 'Invalid username or password'});
     }
-    const token = jwt.sign({ userUsername: user.username }, secretKey);
-    res.cookie('token', token, { httpOnly: true });
-    res.status(200).json({ message: 'Login successful' });
+    const token = jwt.sign({ username: user.username }, secretKey, {expiresIn: 86400,});
+    req.session.token=token;
+    res.status(200).json({ 
+      username: user.username,
+      email: user.email,
+      message: 'Login successful' 
+    });
+  } catch(error){
+    return res.status(500).json({ message: error.message });
+  }
+
 };
 
 export const logoutUser = (req,res)=>{
-  res.clearCookie('token');
-  res.status(200).json({ message: 'Logout successful' });
+  try{
+    req.session = null;
+    return res.status(200).json({
+      message: "You've been signed out!"
+    });
+  }catch (err){
+    this.next(err)
+  }
 };
 
-// export const authenticate = (req, res, next) => {
-//     try {
-//       if (req.session && req.session.user) {
-//         return next();
-//       } else {
-//         return res.status(401).send('Not authenticated');
-//       }
-//     } catch (error) {
-//       console.error('Authentication error:', error);
-//       return res.status(500).send('Internal server error');
-//     }
-//   };
+export const authenticate = (req, res, next) => {
+  let token = req.session.token;
+  if (!token) {
+    return res.status(403).json({ message: 'No token provided!' });
+  }
+  jwt.verify(token,secretKey,(err,decoded) =>{
+    if(err){
+      return res.status(401).json({
+        message: "Unauthorized!",
+      });
+    }
+    req.username=decoded.username
+    next()
+  })
+};
 
 export const authUser = (req, res) => {
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ message: 'Unauthorized' });
-  }
-  try {
-    const decoded = jwt.verify(token, secretKey);
-    // You can use the decoded information to fetch user data from a database
-    res.status(200).json({ message: 'Authenticated', user: decoded });
-  } catch (error) {
-    res.status(401).json({ message: 'Invalid token' });
-  }
+  res.status(200).json({ message: 'Authenticated'});
 };

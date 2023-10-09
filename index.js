@@ -25,7 +25,7 @@ startSequelize(sequelize);
 //     console.log("connection to database successfull")
 // })
 
-server.use(bodyParser.urlencoded({extended: true}));
+server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.raw());
 server.use(bodyParser.json());
 
@@ -37,7 +37,7 @@ server.use(cors());
 //   })
 // );
 
-server.use(express.json());
+// server.use(express.json());
 // server.use(
 //   cookieSession({
 //     name: "bezkoder-session",

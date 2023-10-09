@@ -43,7 +43,7 @@ server.use(
     name: "bezkoder-session",
     keys: ["COOKIE_SECRET"], // should use as secret environment variable
     httpOnly: true,
-    sameSite: 'strict'
+    sameSite: 'none'
   })
 );
 export const secretKey = 'your-secret-key';

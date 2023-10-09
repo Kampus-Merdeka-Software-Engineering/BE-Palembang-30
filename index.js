@@ -1,18 +1,18 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import usersRouter from './Routes/users.js';
-import { startSequelize } from './utils/startSequelize.js';
-import sequelize from './config/sequelize.js';
-import dotenv from 'dotenv';
-import feedbacksRouter from './Routes/feedbacks.js';
-import doctorsRouter from './Routes/doctors.js';
-import diabetesChecksRouter from './Routes/diabetes_checks.js';
-import cors from 'cors';
+import express from "express";
+import bodyParser from "body-parser";
+import usersRouter from "./Routes/users.js";
+import { startSequelize } from "./utils/startSequelize.js";
+import sequelize from "./config/sequelize.js";
+import dotenv from "dotenv";
+import feedbacksRouter from "./Routes/feedbacks.js";
+import doctorsRouter from "./Routes/doctors.js";
+import diabetesChecksRouter from "./Routes/diabetes_checks.js";
+import cors from "cors";
 
 dotenv.config();
 
-const server=express();
-const port =process.env.PORT;
+const server = express();
+const port = process.env.PORT;
 
 startSequelize(sequelize);
 // sequelize.models.Users.create({
@@ -25,7 +25,11 @@ startSequelize(sequelize);
 //     console.log("connection to database successfull")
 // })
 
+<<<<<<< HEAD
 server.use(bodyParser.urlencoded({extended: false}));
+=======
+server.use(bodyParser.urlencoded({ extended: true }));
+>>>>>>> 59cfb5b34911a825648eda8ae284065341fd80fc
 server.use(bodyParser.raw());
 server.use(bodyParser.json());
 
@@ -49,19 +53,19 @@ server.use(cors());
 // export const secretKey = 'your-secret-key';
 // server.use(sessionMiddleware);
 
-server.use("/users",usersRouter);
-server.use("/feedbacks",feedbacksRouter);
-server.use("/diabetesChecks",diabetesChecksRouter);
-server.use("/doctors",doctorsRouter);
+server.use("/users", usersRouter);
+server.use("/feedbacks", feedbacksRouter);
+server.use("/diabetesChecks", diabetesChecksRouter);
+server.use("/doctors", doctorsRouter);
 
-server.use((error,req,res,next)=>{
-    res.status(500).json({
-        message:"internal server error"
-    });
-    console.error(error);
-    next();
+server.use((error, req, res, next) => {
+  res.status(500).json({
+    message: "internal server error",
+  });
+  console.error(error);
+  next();
 });
 
-server.listen(port, ()=>{
-    console.log(`Server is running at port ${port}.`)
+server.listen(port, () => {
+  console.log(`Server is running at port ${port}.`);
 });

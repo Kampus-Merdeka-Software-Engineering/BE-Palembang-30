@@ -8,7 +8,7 @@ import feedbacksRouter from './Routes/feedbacks.js';
 import doctorsRouter from './Routes/doctors.js';
 import diabetesChecksRouter from './Routes/diabetes_checks.js';
 import cors from 'cors';
-import sessionMiddleware from './config/session.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -29,14 +29,18 @@ startSequelize(sequelize);
 server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.raw());
 server.use(bodyParser.json());
-server.use(
-  cors({
-    origin: 'http://127.0.0.1:5501', // Replace with your frontend domain
-    credentials: true, // Include credentials (cookies, HTTP authentication) in CORS requests
-  })
-);
+server.use(cors());
+// server.use(
+//   cors({
+//     origin: 'http://127.0.0.1:5501', // Replace with your frontend domain
+//     credentials: true, // Include credentials (cookies, HTTP authentication) in CORS requests
+//   })
+// );
 
-server.use(sessionMiddleware);
+server.use(express.json());
+server.use(cookieParser());
+export const secretKey = 'your-secret-key';
+// server.use(sessionMiddleware);
 
 server.use("/users",usersRouter);
 server.use("/feedbacks",feedbacksRouter);

@@ -7,7 +7,7 @@ const userRouter = Router();
 userRouter.get("/:username",getUserByUsername);
 userRouter.get("/",getAllUsers);
 userRouter.get('/logout',logoutUser);
-userRouter.get('/check-auth',authenticate,authUser);
+userRouter.get('/profile',authUser);
 
 userRouter.post("/",postUser);
 userRouter.post('/register',registerUser);

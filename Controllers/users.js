@@ -1,5 +1,7 @@
 import { httpStatusMessages } from "../constants/httpStatusMessages.js";
 import { createUser, findAllUsers, findUserByUsername, removeUserByUsername, updateUserByUsername } from "../services/users.js";
+import { secretKey } from "../index.js";
+import jwt from 'jsonwebtoken';
 
 export const getAllUsers= async (req,res)=>{
     // const usersList= await sequelize.models.Users.findAll();
@@ -67,47 +69,61 @@ export const deleteUserByUsername= async(req,res,next)=>{
 };
 
 export const registerUser = async (req,res)=>{
-  const { username, email,password } = req.body;
-  const existingUser = await findUserByUsername(username);
+  const { username, email, password } = req.body;
 
+  if (!username || !email || !password) {
+    return res.status(400).json({ message: 'Invalid input' });
+  }
+
+  const existingUser = await findUserByUsername(username);
   if (existingUser) {
-    return res.status(400).send('User already exists');
+    return res.status(409).json({ message: 'Username already exists' });
   }
 
   await createUser(username,email,password);
-  res.send('Registration successful');
+  res.status(201).json({ message: 'Registration successful' });
+
 };
 
 export const loginUser = async (req,res)=>{
     const {username, password}=req.body;
     const user=await findUserByUsername(username);
-    console.log("User found in database:", user);
-    if(!user || user.password!=password){
-        return res.status(401).send('Invalid username or password');
+    if(!user || user.password!==password){
+        return res.status(401).json({message: 'Invalid username or password'});
     }
-    req.session.user=user;
-    console.log("User is logged in:", req.session.user);
-    res.send('Login successful')
+    const token = jwt.sign({ userUsername: user.username }, secretKey);
+    res.cookie('token', token, { httpOnly: true });
+    res.status(200).json({ message: 'Login successful' });
 };
 
-export const logoutUser = async (req,res)=>{
-    req.session.destroy();
-    res.send('Logged out')
+export const logoutUser = (req,res)=>{
+  res.clearCookie('token');
+  res.status(200).json({ message: 'Logout successful' });
 };
 
-export const authenticate = (req, res, next) => {
-    try {
-      if (req.session && req.session.user) {
-        return next();
-      } else {
-        return res.status(401).send('Not authenticated');
-      }
-    } catch (error) {
-      console.error('Authentication error:', error);
-      return res.status(500).send('Internal server error');
-    }
-  };
+// export const authenticate = (req, res, next) => {
+//     try {
+//       if (req.session && req.session.user) {
+//         return next();
+//       } else {
+//         return res.status(401).send('Not authenticated');
+//       }
+//     } catch (error) {
+//       console.error('Authentication error:', error);
+//       return res.status(500).send('Internal server error');
+//     }
+//   };
 
 export const authUser = (req, res) => {
-    res.send(`Authenticated as ${req.session.user.username}`);
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+  try {
+    const decoded = jwt.verify(token, secretKey);
+    // You can use the decoded information to fetch user data from a database
+    res.status(200).json({ message: 'Authenticated', user: decoded });
+  } catch (error) {
+    res.status(401).json({ message: 'Invalid token' });
+  }
 };

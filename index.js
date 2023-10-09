@@ -8,6 +8,7 @@ import feedbacksRouter from './Routes/feedbacks.js';
 import doctorsRouter from './Routes/doctors.js';
 import diabetesChecksRouter from './Routes/diabetes_checks.js';
 import cors from 'cors';
+import cookieSession from 'cookie-session';
 
 dotenv.config();
 

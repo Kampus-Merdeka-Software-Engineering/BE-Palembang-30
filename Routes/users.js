@@ -5,12 +5,12 @@ const userRouter = Router();
 
 userRouter.get("/:username",getUserByUsername);
 userRouter.get("/",getAllUsers);
-userRouter.get('/logout',logoutUser);
 userRouter.get('/profile',authUser);
 
 userRouter.post("/",postUser);
 userRouter.post('/register',registerUser);
 userRouter.post('/login',loginUser);
+userRouter.post('/logout',logoutUser);
 
 userRouter.put("/:username",putUserByUsername);
 

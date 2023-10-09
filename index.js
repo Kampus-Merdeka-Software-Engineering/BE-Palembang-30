@@ -8,7 +8,6 @@ import feedbacksRouter from './Routes/feedbacks.js';
 import doctorsRouter from './Routes/doctors.js';
 import diabetesChecksRouter from './Routes/diabetes_checks.js';
 import cors from 'cors';
-import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -26,7 +25,7 @@ startSequelize(sequelize);
 //     console.log("connection to database successfull")
 // })
 
-server.use(bodyParser.urlencoded({extended: false}));
+server.use(bodyParser.urlencoded({extended: true}));
 server.use(bodyParser.raw());
 server.use(bodyParser.json());
 server.use(cors());
@@ -38,7 +37,14 @@ server.use(cors());
 // );
 
 server.use(express.json());
-server.use(cookieParser());
+server.use(
+  cookieSession({
+    name: "bezkoder-session",
+    keys: ["COOKIE_SECRET"], // should use as secret environment variable
+    httpOnly: true,
+    sameSite: 'strict'
+  })
+);
 export const secretKey = 'your-secret-key';
 // server.use(sessionMiddleware);
 

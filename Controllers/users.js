@@ -1,7 +1,5 @@
 import { httpStatusMessages } from "../constants/httpStatusMessages.js";
 import { createUser, findAllUsers, findUserByUsername, removeUserByUsername, updateUserByUsername } from "../services/users.js";
-import { secretKey } from "../index.js";
-import jwt from 'jsonwebtoken';
 
 export const getAllUsers= async (req,res)=>{
     // const usersList= await sequelize.models.Users.findAll();
@@ -92,8 +90,8 @@ export const loginUser = async (req,res)=>{
     if(!user || user.password!==password){
         return res.status(401).json({message: 'Invalid username or password'});
     }
-    const token = jwt.sign({ username: user.username }, secretKey, {expiresIn: 86400,});
-    req.session.token=token;
+    // const token = jwt.sign({ username: user.username }, secretKey, {expiresIn: 86400,});
+    // req.session.token=token;
     res.status(200).json({ 
       username: user.username,
       email: user.email,
@@ -105,16 +103,16 @@ export const loginUser = async (req,res)=>{
 
 };
 
-export const logoutUser = (req,res)=>{
-  try{
-    req.session = null;
-    return res.status(200).json({
-      message: "You've been signed out!"
-    });
-  }catch (err){
-    this.next(err)
-  }
-};
+// export const logoutUser = (req,res)=>{
+//   try{
+//     req.session = null;
+//     return res.status(200).json({
+//       message: "You've been signed out!"
+//     });
+//   }catch (err){
+//     this.next(err)
+//   }
+// };
 
 // export const authenticate = (req, res, next) => {
 //   let token = req.session.token;
@@ -132,32 +130,32 @@ export const logoutUser = (req,res)=>{
 //   })
 // };
 
-export const authUser = (req, res, next) => {
-  try {
-    // Retrieve the JWT token from the cookies
-    const token = req.session.token;
+// export const authUser = (req, res, next) => {
+//   try {
+//     // Retrieve the JWT token from the cookies
+//     const token = req.session.token;
 
-    // Check if the token is missing
-    if (!token) {
-      return res.status(403).json({ message: 'No token provided!' });
-    }
-    res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:5501'); // Specify the frontend origin
-    res.header('Access-Control-Allow-Credentials', true); // Allow credentials
-    // Verify the JWT token
-    jwt.verify(token, secretKey, (err, decoded) => {
-      if (err) {
-        console.error('JWT verification error:', err);
-        return res.status(401).json({
-          message: 'Unauthorized!',
-        });
-      }
+//     // Check if the token is missing
+//     if (!token) {
+//       return res.status(403).json({ message: 'No token provided!' });
+//     }
+//     res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:5501'); // Specify the frontend origin
+//     res.header('Access-Control-Allow-Credentials', true); // Allow credentials
+//     // Verify the JWT token
+//     jwt.verify(token, secretKey, (err, decoded) => {
+//       if (err) {
+//         console.error('JWT verification error:', err);
+//         return res.status(401).json({
+//           message: 'Unauthorized!',
+//         });
+//       }
 
-      // JWT token is valid; you can access the decoded data
-      res.status(200).json({ message: 'Authenticated', user: decoded });
-      next();
-    });
-  } catch (error) {
-    console.error('Authentication error:', error);
-    return res.status(500).json({ message: 'Internal server error' });
-  }
-};
+//       // JWT token is valid; you can access the decoded data
+//       res.status(200).json({ message: 'Authenticated', user: decoded });
+//       next();
+//     });
+//   } catch (error) {
+//     console.error('Authentication error:', error);
+//     return res.status(500).json({ message: 'Internal server error' });
+//   }
+// };

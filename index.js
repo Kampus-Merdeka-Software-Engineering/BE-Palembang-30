@@ -8,6 +8,7 @@ import feedbacksRouter from './Routes/feedbacks.js';
 import doctorsRouter from './Routes/doctors.js';
 import diabetesChecksRouter from './Routes/diabetes_checks.js';
 import cors from 'cors';
+import cookieSession from 'cookie-session';
 
 dotenv.config();
 
@@ -28,12 +29,12 @@ startSequelize(sequelize);
 server.use(bodyParser.urlencoded({extended: true}));
 server.use(bodyParser.raw());
 server.use(bodyParser.json());
-// const corsOptions = {
-//   origin: 'http://127.0.0.1:5501', // Replace with the actual URL of your frontend
-//   credentials: true,
-// };
+const corsOptions = {
+  origin: 'http://127.0.0.1:5501', // Replace with the actual URL of your frontend
+  credentials: true,
+};
 
-server.use(cors());
+server.use(cors(corsOptions));
 // server.use(
 //   cors({
 //     origin: 'http://127.0.0.1:5501', // Replace with your frontend domain
@@ -41,16 +42,16 @@ server.use(cors());
 //   })
 // );
 
-// server.use(express.json());
-// server.use(
-//   cookieSession({
-//     name: "bezkoder-session",
-//     keys: ["COOKIE_SECRET"], // should use as secret environment variable
-//     httpOnly: true,
-//     sameSite: 'none'
-//   })
-// );
-// export const secretKey = 'your-secret-key';
+server.use(express.json());
+server.use(
+  cookieSession({
+    name: "bezkoder-session",
+    keys: ["COOKIE_SECRET"], // should use as secret environment variable
+    httpOnly: true,
+    sameSite: 'none'
+  })
+);
+export const secretKey = 'your-secret-key';
 // server.use(sessionMiddleware);
 
 server.use("/users",usersRouter);

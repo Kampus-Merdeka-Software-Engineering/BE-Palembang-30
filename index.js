@@ -29,6 +29,12 @@ startSequelize(sequelize);
 server.use(bodyParser.urlencoded({extended: true}));
 server.use(bodyParser.raw());
 server.use(bodyParser.json());
+const corsOptions = {
+  origin: 'http://127.0.0.1:5501', // Replace with the actual URL of your frontend
+  credentials: true,
+};
+
+server.use(cors(corsOptions));
 server.use(cors());
 // server.use(
 //   cors({
